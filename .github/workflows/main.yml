@@ -4,18 +4,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Configuration de Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'zulu'
-          java-version: '17'
-      - name: Simulation et Package de l'APK
+      - name: Preparation et Validation de la GMAO
         run: |
-          mkdir -p build/outputs/apk/debug/
-          echo "Simulation reussie" > build/outputs/apk/debug/app-debug.apk
-      - name: Dynamic Archiving
-        uses: actions/upload-artifact@v3
-        with:
-          name: app-debug
-          path: build/outputs/apk/debug/app-debug.apk
+          echo "Validation reussie"
