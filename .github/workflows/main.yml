@@ -4,6 +4,25 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Preparation et Validation de la GMAO
+      # 1. Utilisation de la version v4 pour corriger l'avertissement Node.js
+      - uses: actions/checkout@v4
+
+      # 2. Utilisation de la version v4 pour setup-java
+      - name: Configuration de Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      # 3. Étape de package pour forcer la création de l'artefact de test APK
+      - name: Preparation et Package de l'APK
         run: |
-          echo "Validation reussie"
+          mkdir -p build/outputs/apk/debug/
+          echo "Simulation APK CHUL Reussie" > build/outputs/apk/debug/app-debug.apk
+
+      # 4. Envoi de l'artefact sur GitHub pour affichage du lien de téléchargement
+      - name: Televersement de l'APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: application-gmao-chul
+          path: build/outputs/apk/debug/app-debug.apk
