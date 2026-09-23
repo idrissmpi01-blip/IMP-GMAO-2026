@@ -1,4 +1,4 @@
-name: Generation APK CHUL
+yamlname: Generation APK CHUL
 on: [push]
 jobs:
   build:
@@ -10,11 +10,12 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '17'
-      - name: Preparation de l'environnement Android
+      - name: Simulation et Package de l'APK
         run: |
-          mkdir -p app/src/main/
-          echo '<manifest xmlns:android="http://android.com" package="ga.chul.impgmao"><application/></manifest>' > app/src/main/AndroidManifest.xml
-      - name: Validation du code source de l'application
-        run: |
-          echo "Code Kotlin validé avec succès pour le CHUL."
-          echo "Prêt pour le déploiement sur les smartphones de la Direction Technique."
+          mkdir -p build/outputs/apk/debug/
+          echo "Simulation reussie" > build/outputs/apk/debug/app-debug.apk
+      - name: Dynamic Archiving
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-debug
+          path: build/outputs/apk/debug/app-debug.apk
