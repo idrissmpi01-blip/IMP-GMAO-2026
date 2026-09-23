@@ -4,24 +4,22 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # 1. Récupère le code de votre projet (Version v4 pour Node.js 24)
-      - uses: actions/checkout@v4
+      - name: Recuperation du code
+        uses: actions/checkout@v4
 
-      # 2. Configure l'environnement Java (Version v4 mise à jour)
-      - name: Configuration de Java
+      - name: Configuration de l'environnement Java
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version: '17'
 
-      # 3. Crée le dossier et génère le fichier de l'application
-      - name: Preparation et Package de l'APK
+      - name: Force les Droits d'Ecriture et Cree le Fichier
         run: |
+          sudo chmod -R 777 $GITHUB_WORKSPACE
           mkdir -p build/outputs/apk/debug/
-          echo "Dossier de livraison IMP-GMAO CHUL" > build/outputs/apk/debug/app-debug.apk
+          echo "Fichier de test d'installation IMP-GMAO CHUL" > build/outputs/apk/debug/app-debug.apk
 
-      # 4. COMMANDE CRUCIALE : Pousse le fichier sur la page pour créer le bouton de téléchargement
-      - name: Televersement de l'APK
+      - name: Publication de l'Artefact pour Telechargement
         uses: actions/upload-artifact@v4
         with:
           name: application-gmao-chul
